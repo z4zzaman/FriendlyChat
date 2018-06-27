@@ -172,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
                                     .setAvailableProviders(providers)
                                     .setLogo(R.drawable.crime)      // Set logo drawable
                                     .setTheme(R.style.LoginTheme)      // Set theme
+                                    .setTosUrl("https://en.wikipedia.org/wiki/Terms_of_service") // terms of service
+                                    .setPrivacyPolicyUrl("https://en.wikipedia.org/wiki/Privacy_policy") // privacy policy
                                     .build(),
                             RC_SIGN_IN);
 
