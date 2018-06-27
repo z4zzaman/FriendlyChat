@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -153,6 +154,28 @@ public class MainActivity extends AppCompatActivity {
                     //   Toast.makeText(MainActivity.this, "You're now signed in. Welcome to friendly chat", Toast.LENGTH_SHORT).show();
 
                     onSignedInInitialize(user.getDisplayName());
+
+/*                    final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    firebaseUser.sendEmailVerification()
+                            .addOnCompleteListener(this, new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    // Re-enable button
+                                   // findViewById(R.id.verify_email_button).setEnabled(true);
+
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(MainActivity.this,
+                                                "Verification email sent to " + firebaseUser.getEmail(),
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Log.e(TAG, "sendEmailVerification", task.getException());
+                                        Toast.makeText(EmailPasswordActivity.this,
+                                                "Failed to send verification email.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });*/
+
                 } else {
                     //user is  signed out
                     onSignedOutCleanUp();
@@ -178,6 +201,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+
     }
 
     @Override
@@ -185,6 +210,32 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
+
+                /**
+                 * Send the email verification mail to user
+                 */
+                final    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                user.sendEmailVerification();
+                if (!user.isEmailVerified()) {
+                    user.sendEmailVerification()
+                            .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Verification email sent to " + user.getEmail(),
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Failed to send verification email.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+
+
                 Toast.makeText(this, "Signed In", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Signed In cancelled", Toast.LENGTH_SHORT).show();
