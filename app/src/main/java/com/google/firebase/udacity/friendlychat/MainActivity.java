@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Signed In", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Signed In cancelled", Toast.LENGTH_SHORT).show();
-                finish();
+                finish(); 
             }
         }
     }
