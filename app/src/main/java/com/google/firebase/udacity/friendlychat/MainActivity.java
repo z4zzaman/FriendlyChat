@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
                                     .setPrivacyPolicyUrl("https://en.wikipedia.org/wiki/Privacy_policy") // privacy policy
                                     .build(),
                             RC_SIGN_IN);
-
                 }
             }
         };
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Signed In", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Signed In cancelled", Toast.LENGTH_SHORT).show();
-                finish(); 
+                finish();
             }
         }
     }
